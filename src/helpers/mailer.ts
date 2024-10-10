@@ -31,11 +31,13 @@ export const sendEmail = async ({ email, emailType, userID }: any) => {
       to: email, // list of receivers
       subject: emailType === 'VERIFY' ? 'veirfy your email' : 'reset your password', // Subject line
       text: "Hello world?", // plain text body
-      html: "<p>Hello world?</p>", // html body
+      html: `<p>Click <a href="${process.env.DOMAIN}/${emailType === "VERIFY" ? "verifyemail" : "restyourpassword"}?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
+      or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/${emailType === "VERIFY" ? "verifyemail" : "restyourpassword"}?token=${hashedToken}
+      </p>`, // html body
     }
     const mailResponse = await transport.sendMail(mailOptions);
     return mailResponse;
-  } catch (error:any) {
-   throw new Error(error.message);
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }
