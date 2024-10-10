@@ -7,13 +7,13 @@ import { sendEmail} from "@/helpers/mailer";
 
 connectDB();
 
-export async function Post(request:NextRequest){
+export async function POST(request:NextRequest){
     try {
         const reqbody=await request.json();
         //validation code 
         console.log(reqbody);
         const{username,email,password}=reqbody;
-        const user=await User.findOne();
+        const user=await User.findOne({email});
         if(user){
             return NextResponse.json({error:'user already exists'},{status:200});
         }
